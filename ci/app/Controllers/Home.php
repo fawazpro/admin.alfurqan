@@ -71,6 +71,24 @@ class Home extends BaseController
 			$this->login();
 		}
 	}
+	
+	
+	public function preprocess()
+	{
+			$reg = new \App\Models\Reg();
+			$db = $reg->findAll();
+
+			foreach ($db as $key => $one) {
+				var_dump(WRITEPATH . 'uploads/' . $one['passport']);
+				$image = \Config\Services::image()
+					->withFile(WRITEPATH . 'uploads/' . $one['passport'])
+					->withResource()
+					->save(WRITEPATH.'uploads/'.$one['passport'], 10);
+			}
+			echo 'done';
+			
+	}
+
 
 	public function postlogin()
 	{
